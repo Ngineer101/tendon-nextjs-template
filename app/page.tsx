@@ -4,12 +4,9 @@ export default function Home() {
       <p className="mb-5 text-xs font-medium uppercase tracking-[0.24em] text-muted-foreground">
         Generic Template
       </p>
-      <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-        Launch your next idea.
-      </h1>
+      <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Launch your next idea.</h1>
       <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
-        A clean, minimal landing page you can reuse for products, startups, and side
-        projects.
+        A clean, minimal landing page you can reuse for products, startups, and side projects.
       </p>
 
       <div className="mt-10 flex w-full max-w-sm flex-col gap-3 sm:flex-row">
