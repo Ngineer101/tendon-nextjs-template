@@ -1,5 +1,3 @@
-import { AuthCard } from "@/components/auth-card";
-
 export default function Home() {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-6 py-20 text-center font-sans">
@@ -25,8 +23,6 @@ export default function Home() {
           Learn More
         </a>
       </div>
-
-      <AuthCard />
     </main>
   );
 }
