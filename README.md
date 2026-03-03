@@ -1,90 +1,97 @@
 # Next.js + Better Auth + Turso Starter
 
-This boilerplate now includes:
+This guide is for AI agents and humans using this repository as a SaaS/product starter.
 
-- `better-auth` for authentication
-- `drizzle-orm` for typed DB access
-- Turso/libSQL for local (`file:./dev.db`) and production databases
+## Purpose
 
-## 1) Install dependencies
+Use this repo to ship quickly with clean defaults, then opt into extra capabilities only when your product needs them.
 
-```bash
-pnpm install
-```
+## Current Stack Snapshot
 
-## 2) Configure environment variables
+- Runtime/build: Next.js + React + TypeScript with vinext (`pnpm dev`, `pnpm build`)
+- UI: Tailwind CSS v4 + shared primitives in `components/ui/*`
+- Auth: Better Auth (`lib/auth.ts`, `app/api/auth/[...all]/route.ts`)
+- Database: SQLite/libSQL via Turso driver (`lib/db.ts`)
+- ORM/migrations: Drizzle ORM + Drizzle Kit (`lib/db/schema.ts`, `drizzle/*`)
 
-If this is a fresh clone, copy `.env.example` to `.env.local`.
-If you already have `.env.local`, merge in the auth/database variables instead of overwriting it.
+## How to Use This Boilerplate
 
-```bash
-cp .env.example .env.local
-```
+Treat features as modules. Start minimal, add only what is needed.
 
-Required variables:
+- Landing page only: customize `app/page.tsx` and keep everything else untouched.
+- App with auth: keep Better Auth wiring, add sign-in/up UI and protected routes.
+- App with data: add domain tables/migrations and server-side queries/mutations.
+- Email: add provider adapter only when transactional email is needed.
+- Billing: add Stripe only when charging users is needed.
 
-- `BETTER_AUTH_URL` - your app URL (`http://localhost:3000` in development)
-- `BETTER_AUTH_SECRET` - random long secret
-- `TURSO_DATABASE_URL` - local file in dev (`file:./dev.db`) or Turso URL in production
-- `TURSO_AUTH_TOKEN` - blank for local file DB, required for Turso remote DB
+## Ground Rules for Contributors
 
-## 3) Generate auth schema + migrate tables
+1. Keep changes small and reversible.
+2. Prefer existing patterns over new abstractions.
+3. Avoid speculative infrastructure.
+4. Update docs whenever setup or behavior changes.
+5. Never commit secrets.
 
-```bash
-pnpm db:setup
-```
+## Repo Map
 
-This runs:
+- `app/`: routes, layouts, pages, API endpoints
+- `app/api/auth/[...all]/route.ts`: Better Auth handler
+- `lib/auth.ts`: Better Auth server config
+- `lib/auth-client.ts`: Better Auth client helper
+- `lib/db.ts`: Drizzle database client
+- `lib/db/schema.ts`: Drizzle schema source of truth
+- `drizzle/`: generated SQL migrations
+- `components/ui/`: reusable UI components
+- `.env.example`: baseline env vars for enabled features
 
-- `pnpm auth:generate` to generate Better Auth schema at `lib/db/schema.ts`
-- `pnpm db:generate` to generate SQL migrations
-- `pnpm db:migrate` to apply migrations to the configured DB
+## Architecture Conventions
 
-## 4) Start dev server
+### Feature-first layout
 
-```bash
-pnpm dev
-```
+For new product features, prefer:
 
-Open `http://localhost:3000` and use the auth card on the homepage.
-For reliable cookie/session behavior, keep `BETTER_AUTH_URL` and your browser URL on the same host (for example both `localhost`).
+- `features/<feature>/server/*` for server logic
+- `features/<feature>/schema/*` for zod/input schemas
+- `features/<feature>/ui/*` for UI components
 
-## Project files
+Only move code to `lib/*` when reused by multiple features.
 
-- `lib/auth.ts` - Better Auth server config
-- `lib/auth-client.ts` - Better Auth React client
-- `lib/db.ts` - Drizzle + libSQL client
-- `app/api/auth/[...all]/route.ts` - Better Auth API handler
-- `drizzle.config.ts` - Drizzle kit config
+### Server-first data and auth
 
-## Turso production setup (CLI)
+- Keep DB access in server contexts.
+- Keep auth checks near mutations and protected reads.
+- Keep client components focused on presentation and interaction.
 
-```bash
-turso auth signup
-turso db create my-app-prod
-turso db show my-app-prod --url
-turso db tokens create my-app-prod
-```
+### Typed boundaries
 
-Set production env vars with these values:
+- Validate external inputs (forms, params, webhooks) with `zod`.
+- Reuse schemas/types instead of redefining shapes.
 
-- `TURSO_DATABASE_URL=libsql://...`
-- `TURSO_AUTH_TOKEN=...`
-- `BETTER_AUTH_URL=https://your-domain.com`
-- `BETTER_AUTH_SECRET=<strong-random-secret>`
+## Optional Feature Policy
 
-## Vercel deployment (CLI)
+- Do not require env vars for capabilities that are not enabled.
+- When adding a capability, document exactly which env vars become required.
+- Keep fallback/local behavior where possible.
 
-```bash
-vercel
-vercel --prod
-```
+When adding env vars:
 
-Set env vars in Vercel once, then deploy from CLI or CI.
+1. Add placeholders to `.env.example`.
+2. Mark each var as required or optional for a specific capability.
+3. Document setup in `README.md` and/or `architecture.md`.
 
-## Automation examples
+## Database and Migration Rules
 
-- DB setup in CI: `pnpm db:setup`
-- Production deploy: `vercel --prod`
+- Treat `lib/db/schema.ts` as schema source of truth.
+- After schema changes: run `pnpm db:generate` then `pnpm db:migrate`.
+- Keep migrations focused and named clearly.
 
-This gives you local-first DX and a straightforward path to production.
+## Done Criteria for Changes
+
+- Smallest intended user flow works end-to-end.
+- Lint/build checks pass for touched areas (or limitations are documented).
+- Docs are updated for any setup or architecture impact.
+
+## If You Hit an Undecided Architecture Choice
+
+- Add a thin interface first (do not hard-couple too early).
+- Choose the simplest default that can be swapped later.
