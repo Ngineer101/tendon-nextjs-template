@@ -1,0 +1,23 @@
+drizzle.config.ts
+  84b3fbfe9562cd02 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "279adca0c3de8f82c6080b5995194c3153a7055e",
+  "prompts": {
+    "84b3fbfe9562cd02": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_327bfd382ffeSjw5kHNndHYwZ0",
+        "model": "opencode/kimi-k2.5"
+      },
+      "human_author": "Nico Botha <nicolaasb@pm.me>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
