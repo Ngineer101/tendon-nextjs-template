@@ -10,7 +10,7 @@
     "fmt": "oxfmt",
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "npx tsx lib/db/migrate.ts",
     "auth:generate": "pnpm dlx @better-auth/cli@latest generate --yes --output ./lib/db/schema.ts",
     "db:setup": "pnpm auth:generate && pnpm db:generate && pnpm db:migrate"
   },
