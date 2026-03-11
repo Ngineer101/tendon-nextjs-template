@@ -1,0 +1,23 @@
+package.json
+  6c54ef6f48c013a7 6-8,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "37e1825ecececb76aa4e8e9970932696e91770e9",
+  "prompts": {
+    "6c54ef6f48c013a7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_323e39764ffedauk2RN4Lti5A8",
+        "model": "opencode/claude-opus-4-6"
+      },
+      "human_author": "Nico Botha <nicolaasb@pm.me>",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 1,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
