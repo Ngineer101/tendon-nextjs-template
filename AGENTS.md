@@ -21,7 +21,6 @@ Current stack and conventions:
 
 - Runtime/build:
   - Next.js + React + TypeScript
-  - vinext for dev/build/start
   - commands:
     - pnpm dev
     - pnpm build

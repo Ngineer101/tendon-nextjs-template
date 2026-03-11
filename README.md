@@ -8,7 +8,7 @@ Use this repo to ship quickly with clean defaults, then opt into extra capabilit
 
 ## Current Stack Snapshot
 
-- Runtime/build: Next.js + React + TypeScript with vinext (`pnpm dev`, `pnpm build`)
+- Runtime/build: Next.js + React + TypeScript (`pnpm dev`, `pnpm build`)
 - UI: Tailwind CSS v4 + shared primitives in `components/ui/*`
 - Auth: Better Auth (`lib/auth.ts`, `app/api/auth/[...all]/route.ts`)
 - Database: SQLite/libSQL via Turso driver (`lib/db.ts`)
