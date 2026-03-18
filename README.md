@@ -24,6 +24,44 @@ Treat features as modules. Start minimal, add only what is needed.
 - Email: add provider adapter only when transactional email is needed.
 - Billing: add Stripe only when charging users is needed.
 
+## Tendon Capabilities (Email + Storage)
+
+This template is pre-wired to consume Tendon platform capabilities for email and file storage.
+
+- Email and storage are called from server code only.
+- Browser clients should call your own Next.js API routes.
+- Do not add provider secrets (R2/Resend) to this app.
+
+Required env vars when these capabilities are enabled:
+
+- `TENDON_CAPABILITIES_BASE_URL`
+- `TENDON_APP_ID`
+- `TENDON_RUNTIME_TOKEN`
+
+Reference files:
+
+- `lib/tendon/capabilities.ts` (base request helper)
+- `lib/tendon/storage.ts` (signed upload/download/delete helpers)
+- `lib/tendon/email.ts` (email send helper)
+
+Example routes:
+
+- `app/api/files/upload-url/route.ts`
+- `app/api/files/download-url/route.ts`
+- `app/api/contact/send/route.ts`
+- `app/api/tendon/capabilities/health/route.ts`
+
+Example storage upload flow:
+
+1. Browser requests `POST /api/files/upload-url` with `{ path, contentType, sizeBytes }`.
+2. Route calls Tendon capability API and returns a short-lived signed PUT URL.
+3. Browser uploads directly to storage with the signed URL.
+
+Example email flow:
+
+1. Browser/client calls `POST /api/contact/send` with `{ to, subject, html/text }`.
+2. Route validates input and calls Tendon email capability.
+
 ## Ground Rules for Contributors
 
 1. Keep changes small and reversible.

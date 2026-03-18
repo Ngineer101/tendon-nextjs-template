@@ -46,6 +46,33 @@ Current stack and conventions:
   - TURSO_DATABASE_URL
   - TURSO_AUTH_TOKEN
 
+Tendon platform capabilities available in this template:
+
+- Email capability (server-side only) via Tendon Capabilities API
+- Storage capability (server-side only) via Tendon Capabilities API
+
+Capability integration rules (critical):
+
+- Never call Tendon capabilities directly from browser/client components.
+- Always call capabilities from Next.js server routes or other server-only code.
+- Never add provider credentials (R2/Resend) to this app.
+- Use only these env vars for capability access:
+  - TENDON_CAPABILITIES_BASE_URL
+  - TENDON_APP_ID
+  - TENDON_RUNTIME_TOKEN
+
+Canonical wrappers and route examples:
+
+- Wrappers:
+  - lib/tendon/capabilities.ts
+  - lib/tendon/storage.ts
+  - lib/tendon/email.ts
+- Routes:
+  - app/api/files/upload-url/route.ts
+  - app/api/files/download-url/route.ts
+  - app/api/contact/send/route.ts
+  - app/api/tendon/capabilities/health/route.ts
+
 Repo usage policy:
 
 - Treat features as opt-in modules.
